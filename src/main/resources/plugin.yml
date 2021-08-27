@@ -1,0 +1,14 @@
+name: AutoSpigotReload
+version: 1.0
+description: Automatically reloads the server when specific files are updated
+api-version: 1.17
+main: fr.caemur.autospigotreload.AutoSpigotReload
+
+commands:
+  autospigotreload:
+    permission: autospigotreload.admin
+    aliases: asr
+
+permissions:
+  autospigotreload.admin:
+    default: op
