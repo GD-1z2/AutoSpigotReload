@@ -24,6 +24,8 @@ public class AutoSpigotReload extends JavaPlugin {
         if (filesConfig instanceof List) {
             final List<String> files = (List<String>) filesConfig;
 
+            files.clear();
+
             for (Path path : watchServicesManager.getWatchServices().keySet()) {
                 files.add(path.toString());
             }
