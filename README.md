@@ -2,7 +2,7 @@
 
 A minecraft plugin that allows you to automatically reload the server when a specific file is updated
 
-Made for spigot 1.17.1, may run on older versions\
+Made for spigot 1.8.8 and later\
 Requires Java 8
 
 This plugin was made to simplify the plugin development process, and **should not be used on non-testing server**
