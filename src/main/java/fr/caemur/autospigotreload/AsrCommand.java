@@ -4,12 +4,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.io.FileNotFoundException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class AsrCommand implements CommandExecutor {
-    private AutoSpigotReload plugin;
+    private final AutoSpigotReload plugin;
 
     public AsrCommand(AutoSpigotReload plugin) {
         this.plugin = plugin;
@@ -51,9 +52,13 @@ public class AsrCommand implements CommandExecutor {
                         }
 
                         if (!plugin.getWatchServicesManager().getWatchServices().containsKey(newPath)) {
-                            sender.sendMessage(plugin.getWatchServicesManager().addWatcher(newPath)
-                                    ? "§aThe file " + newPath + " was added !"
-                                    : "§cFailed to add the file");
+                            try {
+                                sender.sendMessage(plugin.getWatchServicesManager().addWatcher(newPath)
+                                        ? "§aThe file " + newPath + " was added !"
+                                        : "§cFailed to add the file");
+                            } catch (FileNotFoundException e) {
+                                sender.sendMessage("§cThe file was not found");
+                            }
                         } else {
                             sender.sendMessage("§cThis file was already being watched");
                         }

@@ -3,6 +3,7 @@ package fr.caemur.autospigotreload;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
@@ -20,7 +21,12 @@ public class WatchServicesManager {
         watchServices = new HashMap<>();
 
         for (String path : (List<String>) plugin.getConfig().get("files")) {
-            addWatcher(Paths.get(path));
+            try {
+                addWatcher(Paths.get(path));
+            } catch (FileNotFoundException e) {
+                System.out.println("The file " + path + " was not found and couldn't be added to watch list");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -46,11 +52,11 @@ public class WatchServicesManager {
         return watchServices;
     }
 
-    public boolean addWatcher(Path path) {
+    public boolean addWatcher(Path path) throws FileNotFoundException {
         final WatchService watchService;
 
-        if (path.toFile().isDirectory())
-            return false;
+        if (!path.toFile().isFile())
+            throw new FileNotFoundException();
 
         try {
             watchService = FileSystems.getDefault().newWatchService();

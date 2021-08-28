@@ -1,5 +1,6 @@
 package fr.caemur.autospigotreload;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.file.Path;
@@ -14,7 +15,16 @@ public class AutoSpigotReload extends JavaPlugin {
 
         watchServicesManager = new WatchServicesManager(this);
 
-        getCommand("autospigotreload").setExecutor(new AsrCommand(this));
+        final PluginCommand command = getCommand("autospigotreload");
+
+        if (command == null) {
+            System.out.println("Failed to get command autospigotreload");
+
+            return;
+        }
+
+        command.setExecutor(new AsrCommand(this));
+        command.setTabCompleter(new AsrCompleter(this));
     }
 
     @Override
